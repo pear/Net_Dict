@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE package SYSTEM "../../php4/pear/package.dtd">
 <package version="1.0">
   <name>Net_Dict</name>
   <summary>Interface to the DICT Protocol</summary>
@@ -7,22 +8,31 @@
     <maintainer>
       <user>cnb</user>
       <name>Chandrashekhar Bhosle</name>
-      <email>cnb@freedomink.org</email>
+      <email>cnb@php.net</email>
       <role>lead</role>
     </maintainer>
   </maintainers>
   <release>
+    <version>1.0.1</version>
+    <date>2002-10-05</date>
+    <license>PHP</license>
+    <state>stable</state>
+    <notes>Fixed a bug in define() where dictionary sources other then the first were not shown. -- Thanks Xing Li for pointing it out.</notes>
+    <deps>
+      <dep type="pkg" rel="ge" version="1.0">Net_Socket</dep>
+    </deps>
+    <filelist>
+      <file role="php" baseinstalldir="Net" name="Dict.php" />
+      <file role="doc" baseinstalldir="Net" name="docs/dict.php" />
+    </filelist>
+  </release>
+  <changelog>
+   <release>
     <version>1.0</version>
     <date>2002-09-25</date>
     <license>PHP</license>
     <state>stable</state>
     <notes>This is the initial release of the Net_Dict package.</notes>
-    <deps>
-      <dep type="pkg" rel="ge" version="1.0">Net_Socket</dep>
-    </deps>
-    <filelist>
-      <file role="php" baseinstalldir="Net" md5sum="dbf1036c9f2fdf99affbf3d0cb45925c" name="Dict.php"/>
-      <file role="doc" baseinstalldir="Net" md5sum="c31d542e148a9e49ff8ba9257093daa2" name="docs/dict.php"/>
-    </filelist>
-  </release>
+   </release>
+  </changelog>
 </package>

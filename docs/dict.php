@@ -7,7 +7,8 @@ require '../Dict.php';
 // }}}
 // {{{ get options
 
-$longOptions  = array('help', 'databases', 'info=', 'server', 'status');
+$longOptions  = array('help', 'match=', 'databases', 'strategies', 
+                        'info=', 'server', 'status');
 
 $con = new Console_Getopt;
 
@@ -30,11 +31,13 @@ echo <<<HELP
 Usage: dict [OPTIONS] keyword
 
 Options:
-	--help			Prints this help screen
-	--databases		Show DB list
-	--info=DATABASE		Show Info on DB
-	--server		Show Server Info	
-	--status		Show Status
+    --help          Prints this help screen
+    --matches=word  Show DB matches for word 
+    --databases     Show DB list
+    --strategies    Show Strategy list
+    --info=DATABASE Show Info on DB
+    --server        Show Server Info	
+    --status        Show Status
 
 HELP;
 	exit(0);
@@ -72,19 +75,34 @@ if (!empty($options[1][0])) {
 }
 
 // }}}
-// {{{ options
+// {{{ options 
 
 switch ($options[0][0][0]) {
 
 	case '--help':
 		help();
 		break;
-	case '--databases':
+
+    case '--match':
+
+        foreach($d->match($options[0][0][1]) as $matches)
+            echo $matches['database'] . ' : ' . $matches['word'] . "\n";
+   
+        break;
+
+    case '--databases':
 
 		foreach ($d->showDatabases() as $db) 
-                	echo $db['database'] . ' : ' . $db['description']."\n";
+            echo $db['database'] . ' : ' . $db['description']."\n";
 
 		break;
+
+    case '--strategies':
+        
+        foreach ($d->showStrategies() as $strat)
+            echo $strat['strategy'] . ' : ' . $strat['description'] . "\n";
+
+        break;
 
 	case '--info':
 

@@ -17,13 +17,13 @@
 // | obtain it through the world-wide-web, please send a note to          |
 // | license@php.net so we can mail you a copy immediately.               |
 // +----------------------------------------------------------------------+
-// | Authors: Chandrashekhar Bhosle <cnb@freedomink.org>                  |
+// | Authors: Chandrashekhar Bhosle <cnb@php.net>                         |
 // +----------------------------------------------------------------------+
 //
 // $Id$
 
 // }}}
-// {{{ includes   
+// {{{ includes
 require_once 'PEAR.php';
 require_once 'Net/Socket.php';
 
@@ -35,14 +35,14 @@ require_once 'Net/Socket.php';
 * @package Net
 */
 class Net_Dict {
-    
-  	// {{{ properties
+
+    // {{{ properties
     /**
     * Socket object
     *
     * @var object
     */
-   	var $_socket;
+    var $_socket;
 
     /**
     * Server Information
@@ -51,7 +51,7 @@ class Net_Dict {
     */
     var $servinfo;
    
-   	// }}}
+    // }}}
     // {{{ Constructor
     /**
     * Constructor
@@ -83,7 +83,7 @@ class Net_Dict {
         for ($i = 0; $i < $num; $i++) {
             $resp = $this->_socket->readLine();
 
-            preg_match("/(\d+?)\s+?\"(.+)?\"\s+?(\S+)\s+?\"(.+)?\"/", 
+            preg_match("/(\d{3})\s+?\"(.+)?\"\s+?(\S+)\s+?\"(.+)?\"/", 
                                                     $resp, $matches);
 
             $defines[$i]['response']    = $resp;
@@ -95,7 +95,9 @@ class Net_Dict {
 
             $defines[$i]['definition'] = $resp['text'];
         }
-   
+
+        $this->readLine(); /* discard status */
+
         return $defines;
     }
 
@@ -121,9 +123,9 @@ class Net_Dict {
 
         $resp = $this->_getMultiLine();
         
-        $data = $resp['text'];
+        $this->readLine(); /* discard status */
 
-        preg_match_all("/(\S+)?\s\"(.+?)\"/", $data, $matches);
+        preg_match_all("/(\S+)?\s\"(.+?)\"/", $resp['text'], $matches);
 
         for ($i = 0; $i < count($matches[0]); $i++) {
             $matched[$i]['database'] = $matches[1][$i];
@@ -149,8 +151,10 @@ class Net_Dict {
         } 
     
         $resp = $this->_getMultiLine();
-    
-    	preg_match_all("/(\S+)?\s+?\"(.+?)\"/", $resp['data'], $matches);
+
+        $this->readLine(); /* discard status */
+
+    	preg_match_all("/(\S+)?\s+?\"(.+?)\"/", $resp['text'], $matches);
     
     	for ($i = 0; $i < count($matches[0]); $i++) {
     		$databases[$i]['database']    = $matches[1][$i];
@@ -161,7 +165,7 @@ class Net_Dict {
     }
     
     // }}} 
-     // {{{ showStrategies() 
+    // {{{ showStrategies() 
     /**
     * Gets a list of available strategies
     *
@@ -177,7 +181,9 @@ class Net_Dict {
     
         $resp = $this->_getMultiLine();
 
-        preg_match_all("/(\S+)?\s+?\"(.+?)\"/", $resp['data'], $matches);
+        $this->readLine(); /* discard status */
+
+        preg_match_all("/(\S+)?\s+?\"(.+?)\"/", $resp['text'], $matches);
 
         for ($i = 0; $i < count($matches[0]); $i++) {
             $strategies[$i]['strategy']    = $matches[1][$i];
@@ -188,7 +194,7 @@ class Net_Dict {
     }
     
     // }}}
-     // {{{ showInfo()
+    // {{{ showInfo()
     /**
     * Gets source, copyright, and licensing information about the
     * specified database.
@@ -230,9 +236,9 @@ class Net_Dict {
     * 
     * @return mixed string if successful, else PEAR_Error
     */
-    function client($text)
+    function client($text='cnb')
     {
-        $this->_sendCmd('CLIENT cnb');
+        $this->_sendCmd('CLIENT ' . $text);
     }
     
     // }}}
@@ -347,6 +353,7 @@ class Net_Dict {
     * Connects to a dict server and sets up a socket
     *
     * @param string $server
+    * @param integer $port
     *
     * @return mixed true on success, else PEAR_Error
     */
@@ -426,7 +433,6 @@ class Net_Dict {
         }
 
         $resp['text']   = substr($data, 0, -2);
-        $resp['status'] = $this->readLine();
 
         return $resp;
     }
@@ -459,6 +465,8 @@ class Net_Dict {
         }
 
         $resp = $this->_getMultiLine();
+
+        $this->readLine(); /* discard status */
 
         return $resp['text'];
     }
