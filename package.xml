@@ -13,11 +13,11 @@
     </maintainer>
   </maintainers>
   <release>
-    <version>1.0.1</version>
-    <date>2002-10-05</date>
+    <version>1.0.2</version>
+    <date>2002-10-06</date>
     <license>PHP</license>
     <state>stable</state>
-    <notes>Fixed a bug in define() where dictionary sources other then the first were not shown. -- Thanks Xing Li for pointing it out.</notes>
+    <notes>Fix: match() and define() support multi-part words. -- Thanks Xing Li.</notes>
     <deps>
       <dep type="pkg" rel="ge" version="1.0">Net_Socket</dep>
     </deps>
@@ -27,6 +27,13 @@
     </filelist>
   </release>
   <changelog>
+   <release>
+    <version>1.0.1</version>
+    <date>2002-10-05</date>
+    <license>PHP</license>
+    <state>stable</state>
+    <notes>Fixed a bug in define() where dictionary sources other then the first were not shown. -- Thanks Xing Li for pointing it out.</notes>
+   </release>
    <release>
     <version>1.0</version>
     <date>2002-09-25</date>
