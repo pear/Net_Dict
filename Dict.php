@@ -72,7 +72,7 @@ class Net_Dict {
     */
     function define($word, $database='*')
     {
-        $resp = $this->_sendCmd("DEFINE $database $word");
+        $resp = $this->_sendCmd("DEFINE $database '$word'");
 
         if (PEAR::isError($resp)) {
             return $resp;
@@ -115,7 +115,7 @@ class Net_Dict {
     */
     function match($word, $strategy='substring', $database='*')
     {
-        $resp = $this->_sendCmd("MATCH $database $strategy $word");
+        $resp = $this->_sendCmd("MATCH $database $strategy '$word'");
 
         if (PEAR::isError($resp)) {
             return $resp;
@@ -370,9 +370,9 @@ class Net_Dict {
         $banner = $s->readLine(); 
 
         preg_match("/\d{3} (.*) <(.*)> <(.*)>/", $banner, &$reg);
-        $this->servinfo["signature"] = $reg[1];
+        $this->servinfo["signature"]    = $reg[1];
         $this->servinfo["capabilities"] = explode(".", $reg[2]);
-        $this->servinfo["msg-id"] = $reg[3];
+        $this->servinfo["msg-id"]       = $reg[3];
 
         $this->_socket  = $s;
 
