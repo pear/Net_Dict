@@ -28,6 +28,10 @@ require_once 'PEAR.php';
 require_once 'Net/Socket.php';
 
 // }}}
+// {{{ defines
+define('NET_DICT_SERVER', 'dict.org');
+define('NET_DICT_PORT',   '2628');
+// }}}
 
 /**
 *
@@ -37,6 +41,20 @@ require_once 'Net/Socket.php';
 class Net_Dict {
 
     // {{{ properties
+    /**
+    * Default DICT server name
+    *
+    * @var string
+    */
+    var $server = NET_DICT_SERVER;
+
+    /**
+    * Default DICT Port
+    *
+    * @var int
+    */
+    var $port = NET_DICT_PORT;
+
     /**
     * Socket object
     *
@@ -50,7 +68,21 @@ class Net_Dict {
     * @var string
     */
     var $servinfo;
-   
+
+    /**
+    * if caching is on or off
+    *
+    * @var boolean
+    */
+    var $caching = false;
+    
+    /**
+    * PEAR Cache
+    *
+    * @var object
+    */
+    var $cache;
+
     // }}}
     // {{{ Constructor
     /**
@@ -61,7 +93,7 @@ class Net_Dict {
     }
     
     // }}}
-    // {{{ define()  
+    // {{{ define()
     /**
     * Gets definitions for the specified word in the specified database.
     *
@@ -72,6 +104,17 @@ class Net_Dict {
     */
     function define($word, $database='*')
     {
+        if ($this->caching) {
+            
+            if ($defines = $this->cache->get($word, 'Net_Dict_Defs')) {
+                return $defines;
+            }
+        }
+    
+        if (!is_object($_socket)) {
+            $this->connect();
+        }
+
         $resp = $this->_sendCmd("DEFINE $database '$word'");
 
         if (PEAR::isError($resp)) {
@@ -97,6 +140,10 @@ class Net_Dict {
         }
 
         $this->readLine(); /* discard status */
+
+        if ($this->caching) {
+            $this->cache->save($word, $defines, 0, 'Net_Dict_Defs');
+        }
 
         return $defines;
     }
@@ -352,15 +399,21 @@ class Net_Dict {
     /**
     * Connects to a dict server and sets up a socket
     *
-    * @param string $server
+    * @param string  $server
     * @param integer $port
     *
     * @return mixed true on success, else PEAR_Error
     */
-    function connect($server='dict.org', $port='2628')
+    function connect($server='', $port = 0)
     {
     	$s = new Net_Socket;
-    
+
+        if (empty($server)) 
+            $server = $this->server;
+
+        if (0 == $port)
+            $port   = $this->port;
+        
     	$err = $s->connect($server, $port);
     
     	if (PEAR::isError($err)) {
@@ -379,6 +432,47 @@ class Net_Dict {
         return true;
     }
     
+    // }}}
+    // {{{ setServer()
+    /**
+    * Sets the server and port of dict server
+    *
+    * @param string $server
+    * @param int    $port
+    */
+    function setServer($server, $port = 0)
+    {
+        $this->server = $server;
+
+        if (0 < $port) {
+            $this->port = $port;
+        }
+    }
+
+    // }}}
+    // {{{ setCache()
+    /**
+    * Sets caching on or off and provides the cache type and parameters
+    *
+    * @param boolean $cache
+    * @param string  $container
+    * @param array   $container_options
+    */
+    function setCache($flag = false, $container = '', $container_options = '')
+    {
+        $this->caching = $flag;
+
+        if ($this->caching) {
+
+            require_once 'Cache.php';
+        
+            if (is_object($this->cache))
+                    unset($this->cache);
+
+            $this->cache = new Cache($container, $container_options);
+        } 
+    }
+
     // }}}
     // {{{ _sendCmd()
     /**
