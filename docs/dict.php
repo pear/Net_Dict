@@ -3,7 +3,7 @@
 
 // {{{ includes
 require 'Console/Getopt.php';
-require '../Dict.php';
+require 'Net/Dict.php';
 // }}}
 // {{{ get options
 
