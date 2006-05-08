@@ -397,6 +397,21 @@ class Net_Dict {
     }
 
     /**
+     * Disconnect from the dict server
+     *
+     * @see     Net_Socket::disconnect()
+     * @return  mixed  Net_Socket::disconnect()'s return value
+     * @author  Ian Eure <ieure@php.net>
+     */
+    function disconnect()
+    {
+        if (isset($this->_socket)) {
+            return $this->_socket->disconnect();
+        }
+        return new PEAR_Error('not connected');
+    }
+
+    /**
      * Sets the server and port of dict server
      *
      * @param   string  $server
