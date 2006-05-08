@@ -391,7 +391,7 @@ class Net_Dict {
         $this->servinfo["capabilities"] = explode(".", $reg[2]);
         $this->servinfo["msg-id"]       = $reg[3];
 
-        $this->_socket = $s;
+        $this->_socket =& $s;
 
         return true;
     }
