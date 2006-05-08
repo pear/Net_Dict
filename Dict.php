@@ -105,7 +105,10 @@ class Net_Dict {
         }
 
         if (!is_object($this->_socket)) {
-            $this->connect();
+            $res = $this->connect();
+            if (PEAR::isError($res)) {
+                return $res;
+            }
         }
 
         $resp = $this->_sendCmd("DEFINE $database '$word'");
@@ -381,10 +384,18 @@ class Net_Dict {
         $err = $s->connect($server, $port);
 
         if (PEAR::isError($err)) {
+            
             return $err;
         }
 
         $banner = $s->readLine();
+        $resp['code'] = substr($banner, 0, 3);
+        $resp['text'] = ltrim(substr($banner, 3));
+
+        if (!Net_Dict::isOK($resp)) {
+            return new PEAR_Error($resp['text'],
+                                  $resp['code']);
+        }
 
         $reg = array();
         preg_match("/\d{3} (.*) <(.*)> <(.*)>/", $banner, $reg);
