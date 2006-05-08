@@ -25,7 +25,7 @@
     </maintainers>
 
     <release>
-	<version>1.0.4</version>
+	<version>1.0.5</version>
 	<date>2006-05-08</date>
 	<license>PHP</license>
 	<state>stable</state>
