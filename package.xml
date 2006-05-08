@@ -31,7 +31,7 @@
 	<state>stable</state>
 	<notes><![CDATA[
 - Use new header comment blocks.
-- Adhere to PEAR CS &amp; other minor cleanups.
+- Adhere to PEAR CS & other minor cleanups.
 - Add disconnect() method.
 - Fix include path in example.
 - Fix saving server information in connect().
