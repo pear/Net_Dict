@@ -104,7 +104,7 @@ class Net_Dict {
             }
         }
 
-        if (!is_object($_socket)) {
+        if (!is_object($this->_socket)) {
             $this->connect();
         }
 
@@ -386,7 +386,8 @@ class Net_Dict {
 
         $banner = $s->readLine();
 
-        preg_match("/\d{3} (.*) <(.*)> <(.*)>/", $banner, &$reg);
+        $reg = array();
+        preg_match("/\d{3} (.*) <(.*)> <(.*)>/", $banner, $reg);
         $this->servinfo["signature"]    = $reg[1];
         $this->servinfo["capabilities"] = explode(".", $reg[2]);
         $this->servinfo["msg-id"]       = $reg[3];
