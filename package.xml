@@ -37,6 +37,7 @@
 - Fix saving server information in connect().
 - Fix incorrect variable check in define() which threw a warning.
 - Set $_socket by reference, not by copy.
+- Add error handling in connect() when the server rejects the connection.
 	    ]]>
 	</notes>
 	<deps>
