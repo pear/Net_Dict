@@ -1,108 +1,151 @@
-<?xml version="1.0" encoding="ISO-8859-1" ?>
-<!DOCTYPE package SYSTEM "../../php4/pehttp://pear.php.net/dtd/package-1.0">
-<package version="1.0">
-    <name>Net_Dict</name>
-    <summary>Interface to the DICT Protocol</summary>
-    <description>
-	This class provides a simple API to the DICT Protocol handling all the 
-	network related issues and providing DICT responses in PHP datatypes 
-	to make it easy for a developer to use DICT servers in their programs.
-    </description>
-
-    <maintainers>
-	<maintainer>
-	    <user>cnb</user>
-	    <name>Chandrashekhar Bhosle</name>
-	    <email>cnb@php.net</email>
-	    <role>lead</role>
-	</maintainer>
-	<maintainer>
-	    <user>ieure</user>
-	    <name>Ian Eure</name>
-	    <email>ieure@php.net</email>
-	    <role>lead</role>
-	</maintainer>
-    </maintainers>
-
-    <release>
-	<version>1.0.5</version>
-	<date>2006-05-08</date>
-	<license>PHP</license>
-	<state>stable</state>
-	<notes><![CDATA[
-- Use new header comment blocks.
-- Adhere to PEAR CS & other minor cleanups.
-- Add disconnect() method.
-- Fix include path in example.
-- Fix saving server information in connect().
-- Fix incorrect variable check in define() which threw a warning.
-- Set $_socket by reference, not by copy.
-- Add error handling in connect() when the server rejects the connection.
-	    ]]>
-	</notes>
-	<deps>
-	    <dep type="pkg" rel="ge" version="1.0">Net_Socket</dep>
-	    <dep type="pkg" rel="ge" version="1.5.2">Cache</dep>
-	</deps>
-	<filelist>
-	    <file role="php" baseinstalldir="Net" name="Dict.php" />
-	    <file role="doc" baseinstalldir="Net" name="docs/dict.php" />
-	</filelist>
-    </release>
-
-    <changelog>
-	<release>
-	    <version>1.0.3</version>
-	    <date>2002-11-29</date>
-	    <license>PHP</license>
-	    <state>stable</state>
-	    <notes>
-		Definitions can now be cached (using PEAR Cache package). So you don't 
-		have to make a network connection for an already cached definition.
-
-		$d = new Net_Dict;
-
-		// make sure cache_dir is writable
-		$d->setCache(true, 'file', array('cache_dir'=>'/tmp/cache/'));
-
-		$defs = $d->define($keyword);
-	    </notes>
-	    <deps>
-		<dep type="pkg" rel="ge" version="1.0">Net_Socket</dep>
-		<dep type="pkg" rel="ge" version="1.5.2">Cache</dep>
-	    </deps>
-	    <filelist>
-		<file role="php" baseinstalldir="Net" name="Dict.php" />
-		<file role="doc" baseinstalldir="Net" name="docs/dict.php" />
-	    </filelist>
-	</release>
-	<release>
-	    <version>1.0.2</version>
-	    <date>2002-10-06</date>
-	    <license>PHP</license>
-	    <state>stable</state>
-	    <notes>
-		Fix: match() and define() support multi-part words. -- Thanks Xing Li.
-	    </notes>
-	</release>
-	<release>
-	    <version>1.0.1</version>
-	    <date>2002-10-05</date>
-	    <license>PHP</license>
-	    <state>stable</state>
-	    <notes>
-		Fixed a bug in define() where dictionary sources other then the first 
-		were not shown. -- Thanks Xing Li for pointing it out.
-	    </notes>
-	</release>
-	<release>
-	    <version>1.0</version>
-	    <date>2002-09-25</date>
-	    <license>PHP</license>
-	    <state>stable</state>
-	    <notes>
-		This is the initial release of the Net_Dict package.
-	    </notes>
-	</release>
-    </changelog>
+<?xml version="1.0" encoding="UTF-8"?>
+<package packagerversion="1.8.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+ <name>Net_Dict</name>
+ <channel>pear.php.net</channel>
+ <summary>Interface to the DICT Protocol</summary>
+ <description>This class provides a simple API to the DICT Protocol handling all the 
+network related issues and providing DICT responses in PHP datatypes 
+to make it easy for a developer to use DICT servers in their programs.</description>
+ <lead>
+  <name>Chandrashekhar Bhosle</name>
+  <user>cnb</user>
+  <email>cnb@php.net</email>
+  <active>no</active>
+ </lead>
+ <lead>
+  <name>Ian Eure</name>
+  <user>ieure</user>
+  <email>ieure@php.net</email>
+  <active>no</active>
+ </lead>
+ <date>2009-07-28</date>
+ <time>08:53:11</time>
+ <version>
+  <release>1.0.6</release>
+  <api>1.0.5</api>
+ </version>
+ <stability>
+  <release>stable</release>
+  <api>stable</api>
+ </stability>
+ <license uri="http://www.php.net/license">PHP</license>
+ <notes>
+QA Release
+Package 2.0
+Bug #7018 - Patch / Warnings
+Bug #4811 - Example dict.php uses wrong path
+ </notes>
+ <contents>
+  <dir baseinstalldir="/" name="/">
+   <file baseinstalldir="Net" md5sum="7f4af65fce7f718134f873e8e96e41d5" name="docs/dict.php" role="doc" />
+   <file baseinstalldir="/" md5sum="5b71f30593e944ef3fdfbff3419054e4" name="Net/Dict.php" role="php" />
+  </dir>
+ </contents>
+ <dependencies>
+  <required>
+   <php>
+    <min>4.3.0</min>
+   </php>
+   <pearinstaller>
+    <min>1.5.4</min>
+   </pearinstaller>
+   <package>
+    <name>Net_Socket</name>
+    <channel>pear.php.net</channel>
+    <min>1.0</min>
+   </package>
+   <package>
+    <name>Cache</name>
+    <channel>pear.php.net</channel>
+    <min>1.5.2</min>
+   </package>
+  </required>
+ </dependencies>
+ <phprelease />
+ <changelog>
+  <release>
+   <version>
+    <release>1.0</release>
+    <api>1.0</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2002-09-25</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+This is the initial release of the Net_Dict package.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.1</release>
+    <api>1.0.1</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2002-10-05</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+Fixed a bug in define() where dictionary sources other then the first 
+were not shown. -- Thanks Xing Li for pointing it out.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.2</release>
+    <api>1.0.2</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2002-10-06</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+Fix: match() and define() support multi-part words. -- Thanks Xing Li.
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.3</release>
+    <api>1.0.3</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2002-11-29</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+Definitions can now be cached (using PEAR Cache package). So you don&apos;t 
+have to make a network connection for an already cached definition.
+$d = new Net_Dict;
+// make sure cache_dir is writable
+$d-&gt;setCache(true, &apos;file&apos;, array(&apos;cache_dir&apos;=&gt;&apos;/tmp/cache/&apos;));
+$defs = $d-&gt;define($keyword);
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.6</release>
+    <api>1.0.5</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2009-07-28</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+QA Release
+Package 2.0
+Bug #7018 - Patch / Warnings
+Bug #4811 - Example dict.php uses wrong path
+   </notes>
+  </release>
+ </changelog>
 </package>
