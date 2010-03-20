@@ -13,15 +13,15 @@
  * the PHP License and are unable to obtain it through the web, please
  * send a note to license@php.net so we can mail you a copy immediately.
  *
- * @category   Networking
- * @package    Net_Dict
- * @author     Chandrashekhar Bhosle <cnb@freedomink.org>
- * @author     Ian Eure <ieure@php.net>
- * @copyright  (c) 2002 Chandrashekhar Bhosle
- * @copyright  (c) 2005, 2006 Ian Eure
- * @license    http://www.php.net/license/2_02.txt  PHP License 2.02
- * @version    CVS: $Revision$
- * @link       http://pear.php.net/package/Net_Dict
+ * @category  Networking
+ * @package   Net_Dict
+ * @author    Chandrashekhar Bhosle <cnb@freedomink.org>
+ * @author    Ian Eure <ieure@php.net>
+ * @copyright 2002 Chandrashekhar Bhosle
+ * @copyright 2005 - 2006 Ian Eure
+ * @license   http://www.php.net/license/2_02.txt  PHP License 2.02
+ * @version   CVS: $Revision$
+ * @link      http://pear.php.net/package/Net_Dict
  */
 
 require_once 'PEAR.php';
@@ -29,22 +29,22 @@ require_once 'Net/Socket.php';
 
 
 define('NET_DICT_SERVER', 'dict.org');
-define('NET_DICT_PORT',   '2628');
+define('NET_DICT_PORT', '2628');
 
 /**
  * The main Net_Dict class
  *
  * Net_Dict is a PHP interface for talking to dictd servers.
  *
- * @package   Net_Dict
- * @category  Networking
- * @link      http://pear.php.net/package/Net_Dict
- * @version   Release: @package_version@
- * @version   CVS:     $Revision$
- * @author    Chandrashekhar Bhosle <cnb@freedomink.org>
- * @license   http://www.php.net/license/2_02.txt PHP License v2.02
+ * @category Networking
+ * @package  Net_Dict
+ * @author   Chandrashekhar Bhosle <cnb@freedomink.org>
+ * @license  http://www.php.net/license/2_02.txt PHP License v2.02
+ * @version  Release: @package_version@
+ * @link     http://pear.php.net/package/Net_Dict
  */
-class Net_Dict {
+class Net_Dict
+{
     /**
      * Default DICT server name
      *
@@ -91,8 +91,8 @@ class Net_Dict {
     /**
      * Gets definitions for the specified word in the specified database.
      *
-     * @param   string  $word
-     * @param   string  $database
+     * @param string $word     specified word
+     * @param string $database specified database
      *
      * @return  mixed   Array of definitions if sucessful, else PEAR_Error
      */
@@ -122,8 +122,11 @@ class Net_Dict {
         for ($i = 0; $i < $num; $i++) {
             $resp = $this->_socket->readLine();
 
-            preg_match("/(\d{3})\s+?\"(.+)?\"\s+?(\S+)\s+?\"(.+)?\"/",
-                                                    $resp, $matches);
+            preg_match(
+                "/(\d{3})\s+?\"(.+)?\"\s+?(\S+)\s+?\"(.+)?\"/",
+                $resp,
+                $matches
+            );
 
             $defines[$i]['response']    = $resp;
             $defines[$i]['word']        = $matches[2];
@@ -148,9 +151,9 @@ class Net_Dict {
      * Searches an index for the dictionary, and reports words
      * which were found using a particular strategy.
      *
-     * @param   string  $word
-     * @param   string  $strategy
-     * @param   string  $database
+     * @param string $word     word to search for
+     * @param string $strategy strategy used, defaults to 'substring'
+     * @param string $database database to search, all if not specified.
      *
      * @return  mixed   Array of matches if successful, else PEAR_Error
      */
@@ -234,7 +237,7 @@ class Net_Dict {
      * Gets source, copyright, and licensing information about the
      * specified database.
      *
-     * @param   string  $database
+     * @param string $database database name
      *
      * @return  mixed   string if successful, else PEAR_Error
      */
@@ -263,7 +266,7 @@ class Net_Dict {
      * MUST implement this command (note, though, that the server doesn't
      * have to do anything with the information provided by the client).
      *
-     * @param   string  $text
+     * @param string $text defaults to 'cnb'
      *
      * @return  mixed   string if successful, else PEAR_Error
      */
@@ -326,8 +329,8 @@ class Net_Dict {
      * password.  The authentication-string will be computed as in the APOP
      * protocol discussed in [RFC1939].
      *
-     * @param   string  $user
-     * @param   string  $auth
+     * @param string $user username
+     * @param string $auth password
      *
      * @return  mixed
      * @todo    Implement this method.
@@ -341,9 +344,11 @@ class Net_Dict {
      * being developed [RFC2222].  The DICT protocol reserves the SASLAUTH
      * and SASLRESP commands for this method of authentication.
      *
-     * @param   string  $mechanism
-     * @param   string  $initial_response
+     * @param string $mechanism        mechanism used
+     * @param string $initial_response initial response
+     *
      * @return  mixed
+     *
      * @todo    Implement this method.
      */
     function SASLAuth($mechanism, $initial_response)
@@ -354,9 +359,10 @@ class Net_Dict {
      * The client will send all responses using the SASLRESP command and a
      * BASE64-encoded parameter.
      *
-     * @param   string  $response
-     * @return  mixed
-     * @todo    Implement this method.
+     * @param string $response the response
+     *
+     * @return mixed
+     * @todo   Implement this method.
      */
     function SASLResp($response)
     {
@@ -365,9 +371,10 @@ class Net_Dict {
     /**
      * Connects to a dict server and sets up a socket
      *
-     * @param   string   $server
-     * @param   integer  $port
-     * @return  mixed    true on success, else PEAR_Error
+     * @param string  $server dict server
+     * @param integer $port   port to connect to
+     *
+     * @return mixed    true on success, else PEAR_Error
      */
     function connect($server = '', $port = 0)
     {
@@ -384,7 +391,7 @@ class Net_Dict {
         $err = $s->connect($server, $port);
 
         if (PEAR::isError($err)) {
-            
+
             return $err;
         }
 
@@ -426,8 +433,9 @@ class Net_Dict {
     /**
      * Sets the server and port of dict server
      *
-     * @param   string  $server
-     * @param   int     $port
+     * @param string $server server address
+     * @param int    $port   port number to use
+     *
      * @return  void
      */
     function setServer($server, $port = 0)
@@ -442,9 +450,10 @@ class Net_Dict {
     /**
      * Sets caching on or off and provides the cache type and parameters
      *
-     * @param   boolean  $cache
-     * @param   string   $container
-     * @param   array    $container_options
+     * @param boolean $flag              true if caching is required
+     * @param string  $container         name of container
+     * @param array   $container_options options
+     *
      * @return  void
      */
     function setCache($flag = false, $container = '', $container_options = '')
@@ -452,7 +461,7 @@ class Net_Dict {
         $this->caching = $flag;
 
         if ($this->caching) {
-            require_once 'Cache.php';
+            include_once 'Cache.php';
 
             if (is_object($this->cache)) {
                 unset($this->cache);
@@ -467,7 +476,8 @@ class Net_Dict {
      * if good returns the reponse, other wise
      * returns false.
      *
-     * @param   $cmd   Command to send (\r\n will be appended)
+     * @param string $cmd Command to send (\r\n will be appended)
+     *
      * @return  mixed  First line of response if successful, otherwise false
      */
     function _sendCmd($cmd)
@@ -519,6 +529,10 @@ class Net_Dict {
      * Alias to Net_Socket::readLine();
      *
      * @see Net_Socket::readLine();
+
+     * @return All available data up to a newline, without that
+     *         newline, or until the end of the socket, or a PEAR_Error if
+     *         not connected.
      */
     function readLine()
     {
@@ -528,7 +542,8 @@ class Net_Dict {
     /**
      * Runs a generic dict query
      *
-     * @param   string  $query
+     * @param string $query dict query
+     *
      * @return  mixed   string on success, else PEAR_Error
      */
     function simpleQuery($query)
@@ -549,7 +564,8 @@ class Net_Dict {
     /**
      * Checks if a response code is positive
      *
-     * @param   array    $resp
+     * @param array $resp response code
+     *
      * @return  boolean
      */
     function isOK($resp)
