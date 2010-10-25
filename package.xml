@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<package packagerversion="1.8.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
+<package packagerversion="1.9.1" version="2.0" xmlns="http://pear.php.net/dtd/package-2.0" xmlns:tasks="http://pear.php.net/dtd/tasks-1.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://pear.php.net/dtd/tasks-1.0 http://pear.php.net/dtd/tasks-1.0.xsd http://pear.php.net/dtd/package-2.0 http://pear.php.net/dtd/package-2.0.xsd">
  <name>Net_Dict</name>
  <channel>pear.php.net</channel>
  <summary>Interface to the DICT Protocol</summary>
@@ -18,10 +18,10 @@ to make it easy for a developer to use DICT servers in their programs.</descript
   <email>ieure@php.net</email>
   <active>no</active>
  </lead>
- <date>2009-07-28</date>
- <time>08:53:11</time>
+ <date>2010-10-25</date>
+ <time>22:56:09</time>
  <version>
-  <release>1.0.6</release>
+  <release>1.0.7</release>
   <api>1.0.5</api>
  </version>
  <stability>
@@ -30,15 +30,13 @@ to make it easy for a developer to use DICT servers in their programs.</descript
  </stability>
  <license uri="http://www.php.net/license">PHP</license>
  <notes>
-QA Release
-Package 2.0
-Bug #7018 - Patch / Warnings
-Bug #4811 - Example dict.php uses wrong path
+Automatically built QA release
+Bug #16817 code does not adhere to Standards - kguest
  </notes>
  <contents>
   <dir baseinstalldir="/" name="/">
    <file baseinstalldir="Net" md5sum="7f4af65fce7f718134f873e8e96e41d5" name="docs/dict.php" role="doc" />
-   <file baseinstalldir="/" md5sum="5b71f30593e944ef3fdfbff3419054e4" name="Net/Dict.php" role="php" />
+   <file baseinstalldir="/" md5sum="a607579315edd0735b0f9d244287f954" name="Net/Dict.php" role="php" />
   </dir>
  </contents>
  <dependencies>
@@ -145,6 +143,22 @@ QA Release
 Package 2.0
 Bug #7018 - Patch / Warnings
 Bug #4811 - Example dict.php uses wrong path
+   </notes>
+  </release>
+  <release>
+   <version>
+    <release>1.0.7</release>
+    <api>1.0.5</api>
+   </version>
+   <stability>
+    <release>stable</release>
+    <api>stable</api>
+   </stability>
+   <date>2010-10-25</date>
+   <license uri="http://www.php.net/license">PHP</license>
+   <notes>
+Automatically built QA release
+Bug #16817 code does not adhere to Standards - kguest
    </notes>
   </release>
  </changelog>
